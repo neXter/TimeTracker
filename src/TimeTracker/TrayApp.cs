@@ -34,7 +34,7 @@ internal sealed partial class TrayApp : ApplicationContext
         Db = new Db(Path.Combine(Installer.DataDir, "tracker.db"));
         Settings = new Settings(Db);
         Collector = new Collector(Db, _signals, new AppNamer(), Settings);
-        Stats = new StatsService(Db, Environment.MachineName);
+        Stats = new StatsService(Db, Installer.DeviceName);
         Aliases = new AliasService(Db);
         Collector.Start();
 
@@ -65,7 +65,7 @@ internal sealed partial class TrayApp : ApplicationContext
         OnSlowTick();
         // Load the flyout in the background a few seconds after start so the first click is instant.
         _ = Task.Delay(showFlyoutOnStart ? 1500 : 5000).ContinueWith(_ => _ui.BeginInvoke(() => { if (showFlyoutOnStart) ToggleFlyout(); else WarmFlyout(); }), TaskScheduler.Default);
-        Log.Write($"started v{Installer.VersionText}, device {Environment.MachineName}, lang {Lang}");
+        Log.Write($"started v{Installer.VersionText}, device {Installer.DeviceName}, lang {Lang}");
     }
 
     private void ListenFor(string name, Action action)
@@ -84,8 +84,12 @@ internal sealed partial class TrayApp : ApplicationContext
 
     // ---------- collector loop ----------
 
+    // TIMETRACKER_NO_COLLECT=1 stops live recording (used with demo data for screenshots, so real apps never show up).
+    private static readonly bool NoCollect = Environment.GetEnvironmentVariable("TIMETRACKER_NO_COLLECT") == "1";
+
     private void OnTick()
     {
+        if (NoCollect) return;
         try { Collector.Tick(); }
         catch (Exception ex) { Log.Write("tick failed: " + ex.Message); }
     }

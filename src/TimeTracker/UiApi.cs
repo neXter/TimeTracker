@@ -27,7 +27,7 @@ internal sealed partial class TrayApp
         switch (cmd)
         {
             case "init":
-                return new { lang = Lang, strings = I18n.Strings(Lang), device = Environment.MachineName, version = Installer.VersionText };
+                return new { lang = Lang, strings = I18n.Strings(Lang), device = Installer.DeviceName, version = Installer.VersionText };
 
             case "stats":
                 { var (k, an, end) = ParsePeriod(a); return Stats.Get(k, an, end); }
@@ -73,7 +73,7 @@ internal sealed partial class TrayApp
                     dbPath = Db.Path,
                     dbSize = DbSize(),
                     version = Installer.VersionText,
-                    device = Environment.MachineName,
+                    device = Installer.DeviceName,
                     installed = Installer.IsInstalledCopy,
                     aliases = Aliases.List(),
                 };

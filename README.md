@@ -6,6 +6,45 @@ It is built for **self-monitoring and transparency**: the clock icon is always v
 
 > **License:** this repository is public so anyone can see exactly what the app records, but it is **not open source**. All rights reserved, see [LICENSE](LICENSE). Third-party components: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
+## Screenshots
+
+*Demo data, shown in the light or dark style that matches your GitHub theme.*
+
+**Dashboard, week view:** when the PC is used, which apps were in front, and how long each was open.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dashboard-week-dark.png">
+  <img alt="TimeTracker dashboard, week view: summary tiles, stacked chart of time in front per day, weekday-by-hour heatmap and an apps table" src="docs/screenshots/dashboard-week-light.png" width="900">
+</picture>
+
+**Day view:** a timeline of the day, with the device state on top and the app that was in front below.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dashboard-day-dark.png">
+  <img alt="TimeTracker dashboard, day view with a timeline of device state and foreground apps" src="docs/screenshots/dashboard-day-light.png" width="900">
+</picture>
+
+**Name an app:** programs whose file has no product name show as the raw `.exe`. Give them a name and it applies to all past data.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/name-an-app-dark.png">
+  <img alt="The Name this app dialog for an unnamed game executable" src="docs/screenshots/name-an-app-light.png" width="900">
+</picture>
+
+**Tray flyout:** one click on the tray icon.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/flyout-dark.png">
+  <img alt="The tray flyout showing today's active time, a day strip and the most used apps" src="docs/screenshots/flyout-light.png" width="372">
+</picture>
+
+**Settings:** autostart, idle threshold, language, reports and PIN.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/settings-dark.png">
+  <img alt="The settings window" src="docs/screenshots/settings-light.png" width="520">
+</picture>
+
 ## Install
 
 1. Get `TimeTracker.exe` (build it below, or from a release).
@@ -70,7 +109,7 @@ powershell -ExecutionPolicy Bypass -File .\build.ps1      # runs the tests, writ
 
 Layout: `src/TimeTracker.Core` (database, collector, statistics, reports, web UI assets), `src/TimeTracker` (Windows integration), `tests/`, `tools/`, `docs/` (proposal and design, UI mocks).
 
-Developing: run `dotnet run --project src/TimeTracker -- --dev` with the environment variable `TIMETRACKER_DATA` pointing at a scratch folder so your real data is untouched; `tools/seed_demo.py` fills a scratch database with sample usage.
+Developing: run `dotnet run --project src/TimeTracker -- --dev` with the environment variable `TIMETRACKER_DATA` pointing at a scratch folder so your real data is untouched (an instance with its own data folder has its own lock, so it can run next to an installed copy). `tools/seed_demo.py` fills a scratch database with sample usage. Other developer switches: `TIMETRACKER_DEVICE_NAME` (override the shown computer name), `TIMETRACKER_NO_COLLECT=1` (no live recording), `TIMETRACKER_NO_OPEN=1` (never open files or folders), `TIMETRACKER_DEVTOOLS=1`. The screenshots above were made this way: demo data, device name `DESKTOP-DEMO`, no live recording.
 
 ### Releasing a new version
 

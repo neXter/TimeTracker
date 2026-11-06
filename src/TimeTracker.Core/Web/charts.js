@@ -44,7 +44,7 @@ function seriesOf(S) {
   const top = S.groups.filter(g => g.slot > 0).sort((a, b) => a.slot - b.slot);
   const others = S.groups.filter(g => g.slot === 0 && g.fg > 0);
   const series = top.map(g => ({ id: g.id, name: g.name, col: SLOT(g), ids: [g.id] }));
-  if (others.length) series.push({ id: 'other', name: t('chart.other', others.length), col: 'var(--s-other)', ids: others.map(o => o.id) });
+  if (others.length) series.push({ id: 'other', name: t(others.length === 1 ? 'chart.other1' : 'chart.other', others.length), col: 'var(--s-other)', ids: others.map(o => o.id) });
   return series;
 }
 

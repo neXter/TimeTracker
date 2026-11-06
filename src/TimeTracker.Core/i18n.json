@@ -17,7 +17,7 @@
     "tile.vsDay": "vs. previous day", "tile.vsWeek": "vs. previous week", "tile.vsMonth": "vs. previous month", "tile.vsYear": "vs. previous year", "tile.vsRange": "vs. previous period",
 
     "chart.title": "Time in front, per day", "chart.sub": "Foreground time of each app while the device was active",
-    "chart.other": "Other ({0} apps)", "chart.viewTable": "View as table", "chart.viewChart": "View as chart",
+    "chart.other": "Other ({0} apps)", "chart.other1": "Other (1 app)", "chart.viewTable": "View as table", "chart.viewChart": "View as chart",
     "tip.ofActive": "of {0} in front", "table.day": "Day", "table.total": "Total",
     "heat.title": "When the device is used", "heat.subWeek": "Active minutes per hour, by weekday", "heat.subAvg": "Average active minutes per hour, by weekday",
     "heat.tipMin": "{0} min active", "heat.tipAvg": "{0} min active on average", "heat.none": "Not used", "heat.minPerHour": "40+ min per hour",
@@ -106,7 +106,7 @@
     "tile.vsDay": "ggü. Vortag", "tile.vsWeek": "ggü. Vorwoche", "tile.vsMonth": "ggü. Vormonat", "tile.vsYear": "ggü. Vorjahr", "tile.vsRange": "ggü. Vorzeitraum",
 
     "chart.title": "Zeit im Vordergrund pro Tag", "chart.sub": "Vordergrundzeit jeder App, während das Gerät aktiv war",
-    "chart.other": "Andere ({0} Apps)", "chart.viewTable": "Als Tabelle anzeigen", "chart.viewChart": "Als Diagramm anzeigen",
+    "chart.other": "Andere ({0} Apps)", "chart.other1": "Andere (1 App)", "chart.viewTable": "Als Tabelle anzeigen", "chart.viewChart": "Als Diagramm anzeigen",
     "tip.ofActive": "von {0} im Vordergrund", "table.day": "Tag", "table.total": "Gesamt",
     "heat.title": "Wann das Gerät genutzt wird", "heat.subWeek": "Aktive Minuten pro Stunde, nach Wochentag", "heat.subAvg": "Durchschnittliche aktive Minuten pro Stunde, nach Wochentag",
     "heat.tipMin": "{0} Min. aktiv", "heat.tipAvg": "durchschnittlich {0} Min. aktiv", "heat.none": "Nicht genutzt", "heat.minPerHour": "40+ Min. pro Stunde",

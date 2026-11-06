@@ -4,6 +4,15 @@ Versions follow [semantic versioning](https://semver.org): new features raise th
 number. The version is set in one place, [Directory.Build.props](Directory.Build.props). Upgrading never touches
 recorded data: see "Updating" in the [README](README.md).
 
+## 1.1.1
+
+- Fix: the chart legend said "Other (1 apps)"; it now says "Other (1 app)" (English and German).
+- Safer updates and tests: the installer only stops the installed copy it is about to replace. Instances started with
+  a separate `TIMETRACKER_DATA` folder (development, demo screenshots) have their own lock and can run next to an
+  installed copy.
+- Developer switches for demo screenshots: `TIMETRACKER_DEVICE_NAME`, `TIMETRACKER_NO_COLLECT=1`.
+- Screenshots in the README.
+
 ## 1.1.0
 
 - **Faster flyout:** the tray flyout is loaded in the background after start and only shown on click, instead of

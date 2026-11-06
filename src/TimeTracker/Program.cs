@@ -26,7 +26,7 @@ internal static class Program
                 return OfferInstall(lang);
 
             // One instance per Windows user. A second launch just opens the dashboard of the first.
-            using var mutex = new Mutex(true, @"Local\TimeTracker.SingleInstance", out bool first);
+            using var mutex = new Mutex(true, Installer.MutexName, out bool first);
             if (!first)
             {
                 try { using var ev = EventWaitHandle.OpenExisting(Has("--settings") ? Installer.SettingsEventName : Has("--flyout") ? Installer.FlyoutEventName : Installer.ShowEventName); ev.Set(); } catch { }
@@ -107,7 +107,7 @@ internal static class Program
         }
         if (result == runOnce)
         {
-            using var mutex = new Mutex(true, @"Local\TimeTracker.SingleInstance", out bool first);
+            using var mutex = new Mutex(true, Installer.MutexName, out bool first);
             if (!first) { MessageBox.Show(I18n.T(lang, "run.already"), "TimeTracker", MessageBoxButtons.OK, MessageBoxIcon.Information); return 0; }
             using var app = new TrayApp(showFlyoutOnStart: true);
             Application.Run(app);

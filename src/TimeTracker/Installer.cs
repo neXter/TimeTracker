@@ -14,11 +14,29 @@ internal static class Installer
     public static string InstallDir => Path.Combine(LocalAppData, "Programs", "TimeTracker");
     public static string InstalledExe => Path.Combine(InstallDir, "TimeTracker.exe");
     public static string CurrentExe => Environment.ProcessPath ?? InstalledExe;
+    /// <summary>The Windows computer name. TIMETRACKER_DEVICE_NAME overrides it (used to make demo screenshots).</summary>
+    public static string DeviceName => Environment.GetEnvironmentVariable("TIMETRACKER_DEVICE_NAME") is { Length: > 0 } n ? n : Environment.MachineName;
+
     public const string UninstallKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall\TimeTracker";
-    public const string QuitEventName = @"Local\TimeTracker.Quit";
-    public const string ShowEventName = @"Local\TimeTracker.Show";
-    public const string SettingsEventName = @"Local\TimeTracker.Settings";
-    public const string FlyoutEventName = @"Local\TimeTracker.Flyout";
+    /// <summary>
+    /// Empty normally. When TIMETRACKER_DATA points at another data folder (development, tests, demo screenshots) the
+    /// instance gets its own lock and event names, so it can run next to a real installed copy without touching it.
+    /// </summary>
+    public static string InstanceSuffix
+    {
+        get
+        {
+            var d = Environment.GetEnvironmentVariable("TIMETRACKER_DATA");
+            if (string.IsNullOrEmpty(d)) return "";
+            var hash = System.Security.Cryptography.SHA1.HashData(System.Text.Encoding.UTF8.GetBytes(Path.GetFullPath(d).ToLowerInvariant()));
+            return "." + Convert.ToHexString(hash)[..8];
+        }
+    }
+    public static string MutexName => @"Local\TimeTracker.SingleInstance" + InstanceSuffix;
+    public static string QuitEventName => @"Local\TimeTracker.Quit" + InstanceSuffix;
+    public static string ShowEventName => @"Local\TimeTracker.Show" + InstanceSuffix;
+    public static string SettingsEventName => @"Local\TimeTracker.Settings" + InstanceSuffix;
+    public static string FlyoutEventName => @"Local\TimeTracker.Flyout" + InstanceSuffix;
 
     public static string VersionText => typeof(Installer).Assembly.GetName().Version is { } v ? $"{v.Major}.{v.Minor}.{v.Build}" : "1.0.0";
 
@@ -44,19 +62,30 @@ internal static class Installer
     public static bool IsInstalledCopy => SamePath(CurrentExe, InstalledExe);
     public static bool IsInstalled => File.Exists(InstalledExe) && Registry.CurrentUser.OpenSubKey(UninstallKey) != null;
 
-    /// <summary>Asks other running instances to exit, then kills any that remain.</summary>
+    /// <summary>Running processes of the installed program file (the one an update or uninstall is about to replace).</summary>
+    private static List<Process> InstalledCopyProcesses()
+    {
+        var me = Environment.ProcessId;
+        var list = new List<Process>();
+        foreach (var p in Process.GetProcessesByName("TimeTracker"))
+        {
+            try { if (p.Id != me && p.MainModule?.FileName is { } f && SamePath(f, InstalledExe)) list.Add(p); }
+            catch { /* process ended or is not accessible */ }
+        }
+        return list;
+    }
+
+    /// <summary>Asks the installed copy to exit, then ends it if it does not. Other copies (portable, development) are left alone.</summary>
     public static void StopOthers()
     {
         try { using var quit = EventWaitHandle.OpenExisting(QuitEventName); quit.Set(); } catch { }
-        var me = Environment.ProcessId;
         var deadline = DateTime.UtcNow.AddSeconds(8);
         while (DateTime.UtcNow < deadline)
         {
-            var others = Process.GetProcessesByName("TimeTracker").Where(p => p.Id != me).ToList();
-            if (others.Count == 0) return;
+            if (InstalledCopyProcesses().Count == 0) return;
             Thread.Sleep(250);
         }
-        foreach (var p in Process.GetProcessesByName("TimeTracker").Where(p => p.Id != me))
+        foreach (var p in InstalledCopyProcesses())
         {
             try { p.Kill(true); p.WaitForExit(3000); } catch { }
         }
