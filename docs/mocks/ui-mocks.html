@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TimeTracker – UI mocks</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --ring: rgba(11,11,11,0.10);
+    --track: #ecebe5;
+    --hover: rgba(11,11,11,0.05);
+
+    --s1: #2a78d6; /* Minecraft  */
+    --s2: #eb6834; /* Chrome     */
+    --s3: #1baf7a; /* Discord    */
+    --s4: #eda100; /* Word       */
+    --s5: #e87ba4; /* Rocket Lg  */
+    --s-other: #b9b7ad;
+
+    /* sequential blue, 5 bins (low -> high) */
+    --h0: #ecebe5;
+    --h1: #cde2fb;
+    --h2: #86b6ef;
+    --h3: #3987e5;
+    --h4: #1c5cab;
+    --h5: #0d366b;
+    --idle: #9ec5f4;
+    --open-track: #b7d3f6;
+    --on-fill: #ffffff;
+    --scene-a: #9db8d9; --scene-b: #c9d6e8;
+    --taskbar: rgba(243,243,243,0.86);
+    --flyout: #fbfbfa;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --ring: rgba(255,255,255,0.10);
+    --track: #262624;
+    --hover: rgba(255,255,255,0.06);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --s-other: #5f5e59;
+    --h0: #262624;
+    --h1: #104281;
+    --h2: #1c5cab;
+    --h3: #3987e5;
+    --h4: #6da7ec;
+    --h5: #b7d3f6;
+    --idle: #1c5cab;
+    --open-track: #184f95;
+    --scene-a: #1d2a3d; --scene-b: #2b3a52;
+    --taskbar: rgba(32,32,32,0.88);
+    --flyout: #242423;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7;
+      --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,0.10);
+      --track: #262624; --hover: rgba(255,255,255,0.06);
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+      --s-other: #5f5e59;
+      --h0: #262624; --h1: #104281; --h2: #1c5cab; --h3: #3987e5; --h4: #6da7ec; --h5: #b7d3f6;
+      --idle: #1c5cab; --open-track: #184f95;
+      --scene-a: #1d2a3d; --scene-b: #2b3a52;
+      --taskbar: rgba(32,32,32,0.88); --flyout: #242423;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 28px 24px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; font-weight: 600; }
+  .lede { color: var(--ink-2); margin: 0 0 8px; max-width: 760px; }
+  .toolbar { display: flex; gap: 12px; align-items: center; margin: 12px 0 28px; color: var(--muted); font-size: 12px; }
+  button { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--ring); border-radius: 6px; padding: 5px 12px; cursor: pointer; }
+  button:hover { background: var(--hover); }
+  h2 { font-size: 16px; font-weight: 600; margin: 40px 0 4px; }
+  .cap { color: var(--ink-2); font-size: 13px; margin: 0 0 14px; max-width: 800px; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+  /* ---------- Mock 1: tray scene ---------- */
+  .scene {
+    position: relative; height: 560px; border-radius: 10px; overflow: hidden;
+    background: linear-gradient(135deg, var(--scene-a), var(--scene-b));
+    border: 1px solid var(--ring);
+  }
+  .taskbar {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 48px;
+    background: var(--taskbar); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--ring);
+    display: flex; align-items: center; justify-content: space-between; padding: 0 12px;
+    font-size: 12px; color: var(--ink);
+  }
+  .tb-apps { display: flex; gap: 8px; }
+  .tb-app { width: 28px; height: 28px; border-radius: 6px; background: var(--ring); }
+  .tray { display: flex; align-items: center; gap: 6px; }
+  .tray-ico { width: 28px; height: 28px; border-radius: 6px; display: grid; place-items: center; color: var(--ink-2); }
+  .tray-ico.ours { background: var(--hover); outline: 1px solid var(--ring); color: var(--s1); }
+  .tb-clock { text-align: right; font-size: 11px; line-height: 1.25; margin-left: 8px; }
+
+  .flyout {
+    position: absolute; right: 16px; bottom: 58px; width: 372px;
+    background: var(--flyout); border: 1px solid var(--ring); border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22); padding: 16px;
+  }
+  .fl-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--ink-2); }
+  .fl-device { font-weight: 600; color: var(--ink); }
+  .fl-big { font-size: 38px; font-weight: 600; line-height: 1.1; margin: 6px 0 0; }
+  .fl-sub { color: var(--ink-2); font-size: 12px; margin-bottom: 14px; }
+  .strip { position: relative; height: 16px; background: var(--track); border-radius: 4px; overflow: visible; }
+  .strip .seg { position: absolute; top: 0; bottom: 0; border-radius: 2px; }
+  .strip .now { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink); border-radius: 1px; }
+  .strip-ticks { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 4px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); margin: 8px 0 0; }
+  .legend .k { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .fl-sec { font-size: 12px; font-weight: 600; margin: 16px 0 6px; }
+  .toprow { display: grid; grid-template-columns: 112px 1fr 52px; align-items: center; gap: 8px; height: 26px; font-size: 13px; }
+  .toprow .nm { display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .toprow .nm i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .toprow .bar { height: 10px; border-radius: 0 4px 4px 0; }
+  .toprow .v { text-align: right; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .fl-foot { display: flex; gap: 8px; margin-top: 16px; align-items: center; }
+  .btn-primary { background: var(--s1); color: #fff; border-color: transparent; }
+  .btn-primary:hover { background: var(--s1); filter: brightness(1.08); }
+  .fl-foot .sp { flex: 1; }
+  .fl-foot .state { font-size: 12px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+  .fl-foot .state i { width: 8px; height: 8px; border-radius: 50%; background: #0ca30c; display: inline-block; }
+
+  .ctx {
+    position: absolute; right: 408px; bottom: 58px; width: 250px;
+    background: var(--flyout); border: 1px solid var(--ring); border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22); padding: 4px; font-size: 13px;
+  }
+  .ctx div { padding: 7px 10px; border-radius: 4px; display: flex; justify-content: space-between; }
+  .ctx div.hl { background: var(--hover); }
+  .ctx hr { border: 0; border-top: 1px solid var(--grid); margin: 4px 6px; }
+  .ctx .arr { color: var(--muted); }
+  .scene-label { position: absolute; top: 12px; left: 14px; font-size: 12px; color: var(--ink); background: var(--taskbar); padding: 4px 10px; border-radius: 12px; }
+
+  /* ---------- Mock 2: dashboard ---------- */
+  .win { border: 1px solid var(--ring); border-radius: 10px; background: var(--page); overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,0.10); }
+  .titlebar { display: flex; justify-content: space-between; align-items: center; height: 36px; padding: 0 0 0 14px; background: var(--surface); border-bottom: 1px solid var(--grid); font-size: 12px; color: var(--ink-2); }
+  .titlebar .wc { display: flex; }
+  .titlebar .wc span { width: 46px; text-align: center; color: var(--muted); }
+  .dash { padding: 18px 20px 22px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
+  .seg-ctl { display: inline-flex; border: 1px solid var(--ring); border-radius: 6px; overflow: hidden; background: var(--surface); }
+  .seg-ctl span { padding: 5px 14px; font-size: 13px; color: var(--ink-2); border-left: 1px solid var(--grid); }
+  .seg-ctl span:first-child { border-left: 0; }
+  .seg-ctl span.on { background: var(--s1); color: #fff; }
+  .pill { border: 1px solid var(--ring); background: var(--surface); border-radius: 6px; padding: 5px 12px; font-size: 13px; }
+  .filters .sp { flex: 1; }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 14px 16px; }
+  .tile .lab { font-size: 12px; color: var(--ink-2); }
+  .tile .val { font-size: 28px; font-weight: 600; margin: 2px 0; line-height: 1.2; }
+  .tile .dl { font-size: 12px; color: var(--ink-2); }
+  .row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 12px; margin-bottom: 12px; }
+  .card h3 { font-size: 14px; font-weight: 600; margin: 0; }
+  .card .sub { font-size: 12px; color: var(--ink-2); margin: 2px 0 10px; }
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .card-head button { font-size: 12px; padding: 3px 10px; }
+  svg text { font-family: inherit; }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .legend.chart-legend { margin: 0 0 8px; }
+
+  .heat { display: grid; grid-template-columns: 34px repeat(24, minmax(0, 1fr)); gap: 2px; align-items: center; }
+  .heat .dl { font-size: 11px; color: var(--muted); }
+  .heat .hh { font-size: 10px; color: var(--muted); height: 14px; white-space: nowrap; }
+  .heat .cell { height: 24px; border-radius: 3px; outline: none; }
+  .heat .cell:hover, .heat .cell:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
+  .ramp { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 10px; }
+  .ramp i { width: 18px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; color: var(--ink-2); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+  td { padding: 8px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--hover); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .appcell { display: flex; align-items: center; gap: 10px; }
+  .appico { width: 24px; height: 24px; border-radius: 6px; background: var(--track); display: grid; place-items: center; font-size: 11px; font-weight: 600; color: var(--ink-2); flex: none; }
+  .tbar { position: relative; height: 10px; background: transparent; width: 100%; min-width: 120px; }
+  .tbar .open { position: absolute; left: 0; top: 0; bottom: 0; background: var(--open-track); border-radius: 0 4px 4px 0; }
+  .tbar .fg { position: absolute; left: 0; top: 0; bottom: 0; background: var(--s1); border-radius: 0 4px 4px 0; }
+  .legend .bar-k { width: 18px; height: 8px; border-radius: 2px; }
+
+  .appname { line-height: 1.25; }
+  .appname .exe { font-size: 11px; color: var(--muted); }
+  .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--ink-2); border: 1px solid var(--ring); border-radius: 10px; padding: 0 7px; margin-left: 6px; vertical-align: 1px; }
+  .unnamed { font-style: italic; }
+  .namebtn { border-color: var(--s1); color: var(--s1); font-size: 12px; padding: 2px 10px; margin-left: 8px; }
+  .iconbtn { border: 0; background: transparent; padding: 4px 6px; color: var(--muted); border-radius: 4px; opacity: .55; }
+  tr:hover .iconbtn, tr:focus-within .iconbtn, .iconbtn:focus-visible { opacity: 1; }
+  .iconbtn:hover { color: var(--ink); background: var(--hover); }
+  .hint-line { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); margin-top: 10px; padding: 6px 8px; background: var(--hover); border-radius: 6px; }
+  .hint-line a { color: var(--s1); cursor: pointer; margin-left: auto; font-weight: 600; }
+  .mono { font-family: ui-monospace, Consolas, monospace; }
+
+  .dlg-back { background: linear-gradient(135deg, var(--scene-a), var(--scene-b)); border: 1px solid var(--ring); border-radius: 10px; padding: 36px 16px; display: flex; justify-content: center; }
+  .dlg { width: 480px; max-width: 100%; background: var(--flyout); border: 1px solid var(--ring); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.25); padding: 20px; }
+  .dlg h4 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
+  .dlg .appbox { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--ring); border-radius: 6px; margin-bottom: 14px; background: var(--surface); }
+  .dlg .appbox .appico { width: 36px; height: 36px; font-size: 16px; }
+  .dlg .appbox .p { font-size: 11px; color: var(--muted); word-break: break-all; }
+  .dlg .appbox .u { font-size: 12px; color: var(--ink-2); }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .field input[type=text], .field select, .sel { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--axis); border-radius: 6px; padding: 7px 10px; }
+  .field input[type=text]:focus, .field select:focus, .sel:focus { outline: 2px solid var(--s1); outline-offset: 0; border-color: transparent; }
+  .field .h { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .radios { display: grid; gap: 4px; font-size: 13px; }
+  .radios label { font-weight: 400; margin: 0; display: flex; gap: 8px; align-items: center; }
+  .dlg .check { display: flex; gap: 8px; align-items: center; font-size: 13px; margin: 4px 0 14px; }
+  .dlg .acts { display: flex; gap: 8px; align-items: center; }
+  .dlg .acts .sp { flex: 1; }
+  .dlg .acts a { font-size: 12px; color: var(--ink-2); cursor: pointer; text-decoration: underline; }
+  .preview { font-size: 12px; color: var(--ink-2); margin: -4px 0 12px; }
+  .preview b { color: var(--ink); }
+
+  /* settings */
+  .setwin { width: 640px; max-width: 100%; background: var(--page); border: 1px solid var(--ring); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.25); overflow: hidden; }
+  .setbody { padding: 16px 18px 18px; display: grid; gap: 14px; }
+  .sgroup h5 { margin: 0 0 6px; font-size: 12px; font-weight: 600; color: var(--ink-2); }
+  .sbox { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; }
+  .srow { display: flex; align-items: center; gap: 16px; padding: 12px 14px; border-top: 1px solid var(--grid); }
+  .srow:first-child { border-top: 0; }
+  .srow .tx { flex: 1; min-width: 0; }
+  .srow .tt { font-size: 14px; }
+  .srow .ds { font-size: 12px; color: var(--ink-2); margin-top: 1px; }
+  .srow .ctl { display: flex; align-items: center; gap: 8px; flex: none; }
+  .srow .sel { width: auto; padding: 5px 8px; }
+  .switch { position: relative; width: 40px; height: 20px; border-radius: 10px; border: 1px solid var(--muted); background: transparent; padding: 0; cursor: pointer; flex: none; }
+  .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; border-radius: 50%; background: var(--muted); transition: all .12s; }
+  .switch[aria-checked="true"] { background: var(--s1); border-color: var(--s1); }
+  .switch[aria-checked="true"]::after { left: 23px; background: #fff; }
+  .switch:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .swlab { font-size: 12px; color: var(--ink-2); width: 24px; }
+  .status { margin: 0 14px 12px; padding: 8px 10px; border-radius: 6px; font-size: 12px; background: var(--hover); color: var(--ink-2); }
+  .status.warn { background: rgba(250,178,25,0.16); color: var(--ink); }
+  .status .mono { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; word-break: break-all; }
+  .status a { color: var(--s1); cursor: pointer; }
+  .setfoot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); gap: 12px; flex-wrap: wrap; }
+
+  #tip {
+    position: fixed; z-index: 10; pointer-events: none; display: none;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--ring);
+    border-radius: 6px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    min-width: 150px;
+  }
+  #tip .t { font-weight: 600; margin-bottom: 4px; }
+  #tip .r { display: flex; align-items: center; gap: 6px; }
+  #tip .r i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  #tip .r b { margin-left: auto; padding-left: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  #tip .m { color: var(--ink-2); margin-top: 3px; }
+
+  .seg-hit { outline: none; }
+  .seg-hit:focus-visible + path, .seg-hit:focus-visible { stroke: var(--ink); stroke-width: 2; }
+  .tbl-view { display: none; margin-top: 8px; }
+  .tbl-view.on { display: block; }
+  .annot { margin: 14px 0 0; padding: 0; list-style: none; color: var(--ink-2); font-size: 13px; display: grid; gap: 6px; max-width: 900px; }
+  .annot li::before { content: "▸ "; color: var(--muted); }
+  @media (max-width: 960px) { .row2 { grid-template-columns: 1fr; } .tiles { grid-template-columns: repeat(2, 1fr); } .scene { height: 620px; } .ctx { right: 16px; bottom: 560px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>TimeTracker: UI mocks</h1>
+  <p class="lede">Four screens from the design doc: the tray flyout and menu, the dashboard, naming an app, and settings (including autostart). The usage numbers are made-up sample data. The device name (<b>DESKTOP-DEMO</b>) is the real Windows computer name, which the app reads at every start. Hover over the charts and heatmap to see the tooltips the real UI will have.</p>
+  <div class="toolbar"><button id="theme">Toggle light / dark</button><span>Both modes are designed; the default follows Windows.</span></div>
+
+  <!-- ===================== MOCK 1 ===================== -->
+  <h2>Mock 1: Tray icon, flyout and right-click menu</h2>
+  <p class="cap">The only thing visible all day is the small icon in the notification area. A left-click opens the flyout with today at a glance. A right-click opens the menu (shown beside it for the mock; in reality only one is open at a time).</p>
+
+  <div class="scene">
+    <div class="scene-label">Fri 6 Nov 2026, 19:12</div>
+
+    <div class="ctx" aria-label="Right-click menu">
+      <div class="hl"><span>Open dashboard</span></div>
+      <div><span>Generate report</span><span class="arr">›</span></div>
+      <hr>
+      <div><span>Pause tracking</span><span class="arr">›</span></div>
+      <div><span>Settings…</span></div>
+      <hr>
+      <div><span>Exit</span></div>
+    </div>
+
+    <div class="flyout" role="dialog" aria-label="Today">
+      <div class="fl-head"><span class="fl-device">DESKTOP-DEMO</span><span>Today · Fri 6 Nov</span></div>
+      <div class="fl-big">3h 12m</div>
+      <div class="fl-sub">active today · first activity 07:10</div>
+
+      <div class="strip" id="strip" role="img" aria-label="Device state across today"></div>
+      <div class="strip-ticks"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+      <div class="legend">
+        <span class="k"><i style="background:var(--s1)"></i>Active</span>
+        <span class="k"><i style="background:var(--idle)"></i>Idle</span>
+        <span class="k"><i style="background:var(--track);outline:1px solid var(--axis)"></i>Locked / off</span>
+      </div>
+
+      <div class="fl-sec">Most used today (in front)</div>
+      <div id="toprows"></div>
+
+      <div class="hint-line">⚠ 1 app has no name yet: <span class="mono">game_x64.exe</span><a>Name it</a></div>
+
+      <div class="fl-foot">
+        <button class="btn-primary">Open dashboard</button>
+        <button>Report ▾</button>
+        <span class="sp"></span>
+        <span class="state"><i></i>Tracking</span>
+      </div>
+    </div>
+
+    <div class="taskbar">
+      <div class="tb-apps"><div class="tb-app"></div><div class="tb-app"></div><div class="tb-app"></div><div class="tb-app"></div></div>
+      <div class="tray">
+        <div class="tray-ico">⌃</div>
+        <div class="tray-ico ours" title="TimeTracker">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tray-ico">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 6a9 9 0 0 1 13 0M3.7 8.4a6 6 0 0 1 8.6 0M6 10.8a3 3 0 0 1 4 0"/><circle cx="8" cy="13" r=".8" fill="currentColor"/></svg>
+        </div>
+        <div class="tray-ico">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 6h3l4-3v10l-4-3H2zM11.5 5.5a3.5 3.5 0 0 1 0 5"/></svg>
+        </div>
+        <div class="tb-clock">19:12<br>06/11/2026</div>
+      </div>
+    </div>
+  </div>
+  <ul class="annot">
+    <li>Hover tooltip on the icon: <b>TimeTracker · Active today 3h 12m</b>. A paused tracker gets a small badge on the icon.</li>
+    <li>The bar shows the day in three states. Locked or off time is not counted. Idle time is shown but not counted as active.</li>
+    <li>Apps whose file has no usable product name show up as their raw exe name. The flyout points them out so you can give them a proper name (Mock 3).</li>
+    <li><b>Settings…</b> in the menu opens the settings screen (Mock 4), where autostart is switched on or off.</li>
+    <li>"Most used" is time in the foreground only. The dashboard also shows how long each app was open.</li>
+  </ul>
+
+  <!-- ===================== MOCK 2 ===================== -->
+  <h2>Mock 2: Dashboard (week view)</h2>
+  <p class="cap">Opens from the tray as a normal window and disappears from the taskbar again when closed. The same layout is used for the exported HTML report.</p>
+
+  <div class="win">
+    <div class="titlebar"><span>TimeTracker</span><span class="wc"><span>–</span><span>☐</span><span>✕</span></span></div>
+    <div class="dash">
+      <div class="filters">
+        <span class="pill" title="Windows computer name" style="font-weight:600">DESKTOP-DEMO</span>
+        <span class="seg-ctl"><span>Day</span><span class="on">Week</span><span>Month</span><span>Year</span></span>
+        <span class="pill">‹ &nbsp;26 Oct – 1 Nov 2026&nbsp; ›</span>
+        <span class="sp"></span>
+        <button>Export report ▾</button>
+      </div>
+
+      <div class="tiles" id="tiles"></div>
+
+      <div class="row2">
+        <div class="card chart">
+          <div class="card-head">
+            <div><h3>Time in front, per day</h3><div class="sub">Foreground time of each app while the device was active</div></div>
+            <button id="tblbtn">View as table</button>
+          </div>
+          <div class="legend chart-legend" id="col-legend"></div>
+          <div id="colchart"></div>
+          <div class="tbl-view" id="coltable"></div>
+        </div>
+
+        <div class="card">
+          <h3>When the device is used</h3>
+          <div class="sub">Active minutes per hour, by weekday</div>
+          <div class="heat" id="heat"></div>
+          <div class="ramp" id="ramp"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Apps</h3><div class="sub">Dark bar = time in front. Light bar = time open (focused or not). Click a row for sessions.</div></div></div>
+        <table>
+          <thead><tr><th>App</th><th style="width:34%">Time</th><th class="num">In front</th><th class="num">Open</th><th class="num">Sessions</th><th class="num">Last used</th><th style="width:34px"></th></tr></thead>
+          <tbody id="approws"></tbody>
+        </table>
+        <div class="legend" style="margin-top:10px">
+          <span class="k"><i class="bar-k" style="background:var(--s1)"></i>In front</span>
+          <span class="k"><i class="bar-k" style="background:var(--open-track)"></i>Open</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="annot">
+    <li>Every row shows the exe file under the name, and has a pencil to rename it. Apps with no detected name are flagged with <b>Name this app</b>. Renaming applies to all past data and to reports.</li>
+    <li>Period switch (Day / Week / Month / Year) and the arrows change every card at once. <b>Day</b> replaces the columns with a full timeline of the day.</li>
+    <li>The sum of the "In front" values equals the active time, since only one app is in front at a time. "Open" can be larger, which is why Discord and Spotify look long.</li>
+  </ul>
+
+  <!-- ===================== MOCK 3 ===================== -->
+  <h2>Mock 3: Giving an app a custom name</h2>
+  <p class="cap">Opened from the pencil on any row in the Apps table, from <b>Name this app</b>, from the flyout hint, or from Settings → Apps. This one is live: click a pencil in Mock 2 to load that app here, type a name and press Save to see the table update.</p>
+  <div class="dlg-back">
+    <div class="dlg" id="dlg" role="dialog" aria-label="Name this app">
+      <h4>Name this app</h4>
+      <div class="appbox">
+        <span class="appico" id="d-ico">?</span>
+        <div>
+          <div><b id="d-exe">game_x64.exe</b></div>
+          <div class="p" id="d-path"></div>
+          <div class="u" id="d-use"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="d-name">Display name</label>
+        <input type="text" id="d-name" placeholder="e.g. Hollow Quest" autocomplete="off">
+        <div class="h" id="d-det">Detected name: none (the file has no product name)</div>
+      </div>
+      <div class="preview" id="d-prev"></div>
+      <div class="field">
+        <label>Apply to</label>
+        <div class="radios">
+          <label><input type="radio" name="m" checked> This exact file only</label>
+          <label><input type="radio" name="m"><span>Any file called <span id="d-exe2" class="mono">game_x64.exe</span>, in any folder (survives updates and reinstalls)</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="d-title">Only when the window title contains <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <input type="text" id="d-title" placeholder="e.g. Minecraft" autocomplete="off">
+        <div class="h">For programs like <code>javaw.exe</code> that run many different things. Applies from now on, because titles are not stored.</div>
+      </div>
+      <div class="field">
+        <label for="d-merge">Merge into another app <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <select id="d-merge"><option>Don't merge</option></select>
+        <div class="h">Counts this exe's time under the other app, e.g. a game's launcher and the game itself.</div>
+      </div>
+      <label class="check"><input type="checkbox" id="d-hide"> Hide this app from the dashboard and reports</label>
+      <div class="acts">
+        <button class="btn-primary" id="d-save">Save</button>
+        <button id="d-cancel">Cancel</button>
+        <span class="sp"></span>
+        <a id="d-reset">Reset to detected name</a>
+      </div>
+    </div>
+  </div>
+  <ul class="annot">
+    <li>The name is a display label stored on the device, separate from the recorded data, so it applies retroactively and can be changed or removed at any time.</li>
+    <li>The raw exe name and path always stay visible as the secondary line, so you can tell what an entry really is.</li>
+    <li>A name can be shared: giving two exes the same name (or using "Merge into") combines their time in charts and reports.</li>
+  </ul>
+
+  <!-- ===================== MOCK 4 ===================== -->
+  <h2>Mock 4: Settings (tray menu → Settings…)</h2>
+  <p class="cap">A small window, not a full app. Settings use the language you pick (English or Deutsch, default = Windows). The autostart switch is live in this mock: flip it to see what the app would change on the PC and what the warning says.</p>
+  <div class="dlg-back" style="padding:28px 16px">
+    <div class="setwin" role="dialog" aria-label="TimeTracker settings">
+      <div class="titlebar"><span>TimeTracker · Settings</span><span class="wc"><span>✕</span></span></div>
+      <div class="setbody">
+
+        <div class="sgroup">
+          <h5>General</h5>
+          <div class="sbox">
+            <div class="srow">
+              <div class="tx"><div class="tt">Language</div><div class="ds">Applies to the app and to reports. Default: same as Windows.</div></div>
+              <div class="ctl"><select class="sel" aria-label="Language"><option selected>Same as Windows (English)</option><option>English</option><option>Deutsch</option></select></div>
+            </div>
+            <div class="srow">
+              <div class="tx"><div class="tt" id="as-t">Start TimeTracker when I sign in to Windows</div><div class="ds">Runs in the background from sign-in, with no window.</div></div>
+              <div class="ctl"><span class="swlab" id="as-l">On</span><button class="switch" id="as-sw" role="switch" aria-checked="true" aria-labelledby="as-t"></button></div>
+            </div>
+            <div class="status" id="as-status"></div>
+          </div>
+        </div>
+
+        <div class="sgroup">
+          <h5>Tracking</h5>
+          <div class="sbox">
+            <div class="srow">
+              <div class="tx"><div class="tt">Count as idle after</div><div class="ds">No keyboard, mouse or touch input for this long.</div></div>
+              <div class="ctl"><select class="sel"><option>2 minutes</option><option selected>5 minutes</option><option>10 minutes</option><option>15 minutes</option></select></div>
+            </div>
+            <div class="srow">
+              <div class="tx"><div class="tt">Count fullscreen apps and gamepad input as active</div><div class="ds">Games and videos stay active without keyboard or mouse input.</div></div>
+              <div class="ctl"><button class="switch" role="switch" aria-checked="true" aria-label="Count fullscreen and gamepad as active"></button></div>
+            </div>
+            <div class="srow">
+              <div class="tx"><div class="tt">Record window titles</div><div class="ds">Can reveal website, chat and document names. Off by default.</div></div>
+              <div class="ctl"><button class="switch" role="switch" aria-checked="false" aria-label="Record window titles"></button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sgroup">
+          <h5>Apps</h5>
+          <div class="sbox">
+            <div class="srow">
+              <div class="tx"><div class="tt">Custom names and hidden apps</div><div class="ds" id="s-names">1 custom name · 0 hidden</div></div>
+              <div class="ctl"><button id="s-manage">Manage…</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sgroup">
+          <h5>Reports</h5>
+          <div class="sbox">
+            <div class="srow">
+              <div class="tx"><div class="tt">Report folder</div><div class="ds mono">%USERPROFILE%\Documents\TimeTracker</div></div>
+              <div class="ctl"><button>Change…</button></div>
+            </div>
+            <div class="srow">
+              <div class="tx"><div class="tt">Create weekly and monthly reports automatically</div><div class="ds">Every Monday for the previous week, and on the 1st for the previous month.</div></div>
+              <div class="ctl"><button class="switch" role="switch" aria-checked="true" aria-label="Automatic reports"></button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sgroup">
+          <h5>Protection</h5>
+          <div class="sbox">
+            <div class="srow">
+              <div class="tx"><div class="tt">Require a PIN to pause, exit or change settings</div><div class="ds">Also protects the autostart switch above.</div></div>
+              <div class="ctl"><button>Set PIN…</button><button class="switch" role="switch" aria-checked="false" aria-label="Require PIN"></button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setfoot">
+          <span>TimeTracker 0.1 · DESKTOP-DEMO · Data on this device only: <span class="mono">%LOCALAPPDATA%\TimeTracker\tracker.db</span> (1.4 MB)</span>
+          <span><button>Open folder</button> <button>Delete all data…</button></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="annot">
+    <li>Autostart on is the default after install. Switching it off removes the startup entry; the app keeps running until the next sign-in or Exit. Switching it on adds the entry again and needs no admin rights.</li>
+    <li>If someone disables TimeTracker in <b>Windows Settings → Apps → Startup</b>, the next manual start notices this and shows the status as "Blocked by Windows" with a link to that page.</li>
+    <li>With the PIN on, the autostart switch, Pause, Exit and Delete all data ask for it.</li>
+  </ul>
+</div>
+
+<div id="tip" role="tooltip"></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const fmt = (m) => m < 60 ? `${m}m` : `${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}m`;
+const tip = $('#tip');
+function showTip(html, x, y) {
+  tip.innerHTML = html; tip.style.display = 'block';
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  tip.style.left = Math.min(x + 14, innerWidth - w - 8) + 'px';
+  tip.style.top = Math.max(8, Math.min(y + 14, innerHeight - h - 8)) + 'px';
+}
+const hideTip = () => tip.style.display = 'none';
+function bindTip(el, html) {
+  el.addEventListener('mousemove', e => showTip(html, e.clientX, e.clientY));
+  el.addEventListener('mouseleave', hideTip);
+  el.addEventListener('focus', () => { const r = el.getBoundingClientRect(); showTip(html, r.right, r.top); });
+  el.addEventListener('blur', hideTip);
+}
+$('#theme').onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = dark ? 'light' : 'dark';
+};
+
+/* ================= Mock 1 data (today) ================= */
+const H = (hh, mm) => hh + mm / 60;
+const day = [   // [startHour, endHour, state]  (active total = 30+75+45+42 = 192 min)
+  [H(7,10),  H(7,40),  'active'],
+  [H(15,30), H(16,45), 'active'],
+  [H(16,45), H(16,55), 'idle'],
+  [H(16,55), H(17,40), 'active'],
+  [H(18,30), H(19,12), 'active'],
+];
+const nowH = H(19,12);
+const stripEl = $('#strip');
+const stateCol = { active: 'var(--s1)', idle: 'var(--idle)' };
+day.forEach(([a, b, s]) => {
+  const d = document.createElement('div'); d.className = 'seg';
+  d.style.left = `calc(${a/24*100}% + 1px)`; d.style.width = `max(2px, calc(${(b-a)/24*100}% - 2px))`;
+  d.style.background = stateCol[s]; d.tabIndex = 0;
+  const t = (h) => `${String(Math.floor(h)).padStart(2,'0')}:${String(Math.round((h%1)*60)).padStart(2,'0')}`;
+  bindTip(d, `<div class="t">${s === 'active' ? 'Active' : 'Idle'}</div><div class="m">${t(a)} – ${t(b)} · ${fmt(Math.round((b-a)*60))}</div>`);
+  stripEl.appendChild(d);
+});
+const nowEl = document.createElement('div'); nowEl.className = 'now'; nowEl.style.left = `${nowH/24*100}%`; stripEl.appendChild(nowEl);
+
+const APPS = {
+  mc:  { name: 'Minecraft',        col: 'var(--s1)' },
+  ch:  { name: 'Google Chrome',    col: 'var(--s2)' },
+  dc:  { name: 'Discord',          col: 'var(--s3)' },
+  wd:  { name: 'Microsoft Word',   col: 'var(--s4)' },
+  rl:  { name: 'Rocket League',    col: 'var(--s5)' },
+};
+const today = [['mc',70],['ch',48],['dc',30],['wd',20],['rl',14]];
+$('#toprows').innerHTML = today.map(([k, m]) => `
+  <div class="toprow">
+    <span class="nm"><i style="background:${APPS[k].col}"></i>${APPS[k].name}</span>
+    <span><div class="bar" style="width:${m/70*100}%;background:${APPS[k].col}"></div></span>
+    <span class="v">${fmt(m)}</span>
+  </div>`).join('');
+
+/* ================= Mock 2 data (week 26 Oct – 1 Nov) ================= */
+const DAYS = ['Mon 26','Tue 27','Wed 28','Thu 29','Fri 30','Sat 31','Sun 1'];
+const DAYFULL = ['Mon 26 Oct','Tue 27 Oct','Wed 28 Oct','Thu 29 Oct','Fri 30 Oct','Sat 31 Oct','Sun 1 Nov'];
+const WK = [
+  // name, color, minutes Mon..Sun in front, open factor, sessions, last used
+  { id:'mc', exe:'javaw.exe', name:'Minecraft', custom:true, col:'var(--s1)', m:[35,20,50,25,90,150,120], open:1.10, ses:14, last:'Sun 21:40' },
+  { id:'ch', exe:'chrome.exe', name:'Google Chrome',    col:'var(--s2)', m:[40,55,60,50,45,70,50],   open:1.80, ses:41, last:'Sun 20:55' },
+  { id:'dc', exe:'Discord.exe', name:'Discord',          col:'var(--s3)', m:[15,20,25,20,40,45,45],   open:4.00, ses:23, last:'Sun 21:50' },
+  { id:'wd', exe:'WINWORD.EXE', name:'Microsoft Word',   col:'var(--s4)', m:[30,35,20,30,0,0,15],     open:1.60, ses:12, last:'Sun 10:20' },
+  { id:'rl', exe:'RocketLeague.exe', name:'Rocket League',    col:'var(--s5)', m:[0,0,25,0,40,70,60],      open:1.05, ses:9,  last:'Sun 19:30' },
+  { id:'gx', name:'game_x64.exe', unnamed:true, exe:'game_x64.exe', path:'D:\\Games\\HollowQuest\\Binaries\\Win64\\game_x64.exe', col:'var(--s-other)', m:[0,0,0,0,15,25,20], open:1.05, ses:6, last:'Sun 18:40', other:true },
+  { id:'st', exe:'steam.exe', name:'Steam',            col:'var(--s-other)', m:[5,5,10,5,10,15,15], open:3.50, ses:18, last:'Sun 19:28', other:true },
+  { id:'on', exe:'ONENOTE.EXE', name:'Microsoft OneNote',col:'var(--s-other)', m:[20,25,0,20,0,0,10], open:2.20, ses:8,  last:'Sun 10:05', other:true },
+  { id:'sp', exe:'Spotify.exe', name:'Spotify',          col:'var(--s-other)', m:[5,8,10,6,12,15,12], open:6.00, ses:11, last:'Sun 21:30', other:true },
+];
+const sum = a => a.reduce((x,y)=>x+y,0);
+WK.forEach(a => { a.total = sum(a.m); a.openMin = Math.round(a.total * a.open); });
+const dayTot = DAYS.map((_, i) => sum(WK.map(a => a.m[i])));
+const weekTot = sum(dayTot);
+const prevWeek = 1450;
+
+/* tiles */
+const topApp = [...WK].sort((a,b) => b.total - a.total)[0];
+$('#tiles').innerHTML = [
+  ['Active time', fmt(weekTot), `${weekTot>=prevWeek?'+':''}${Math.round((weekTot/prevWeek-1)*100)}% vs. previous week`],
+  ['Daily average', fmt(Math.round(weekTot/7)), `Busiest day: Sat, ${fmt(Math.max(...dayTot))}`],
+  ['Most used app', topApp.name, `${fmt(topApp.total)} in front · ${Math.round(topApp.total/weekTot*100)}% of active time`],
+  ['Longest session', '2h 05m', 'Sat 31 Oct · Minecraft'],
+].map(([l,v,d]) => `<div class="card tile"><div class="lab">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
+
+/* stacked columns */
+const STACK = [
+  ...WK.filter(a => !a.other),
+  { id:'ot', name:`Other (${WK.filter(a=>a.other).length} apps)`, col:'var(--s-other)', m: DAYS.map((_, i) => sum(WK.filter(a=>a.other).map(a=>a.m[i]))) },
+];
+$('#col-legend').innerHTML = STACK.map(a => `<span class="k"><i style="background:${a.col}"></i>${a.name}</span>`).join('');
+
+(function drawCols() {
+  const W = 560, Hh = 270, L = 40, R = 8, T = 10, B = 26;
+  const pw = W - L - R, ph = Hh - T - B, max = 420;
+  const y = v => T + ph - v / max * ph;
+  const slot = pw / 7, cw = 24, gap = 2, rad = 4;
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Stacked columns of foreground minutes per day and app">`;
+  for (let v = 0; v <= 360; v += 120) {
+    s += `<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${v===0?'var(--axis)':'var(--grid)'}" stroke-width="1"/>`;
+    s += `<text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v/60}h</text>`;
+  }
+  DAYS.forEach((d, i) => {
+    const cx = L + slot * (i + .5);
+    s += `<text x="${cx}" y="${Hh-8}" text-anchor="middle" font-size="11" fill="var(--muted)">${d}</text>`;
+    let acc = 0;
+    const parts = STACK.filter(a => a.m[i] > 0);
+    parts.forEach((a, pi) => {
+      const v = a.m[i], y0 = y(acc), y1 = y(acc + v);
+      acc += v;
+      const isTop = pi === parts.length - 1, first = pi === 0;
+      // visible height leaves a 2px surface gap above each segment (except the top one)
+      let top = y1, bot = y0 - (first ? 0 : 0);
+      let h = bot - top - (isTop ? 0 : gap);
+      h = Math.max(h, 1.5);
+      const x = cx - cw / 2, r = isTop ? Math.min(rad, h / 2) : 0;
+      const p = `M${x},${top + h} V${top + r} ${r ? `Q${x},${top} ${x + r},${top}` : ''} H${x + cw - r} ${r ? `Q${x + cw},${top} ${x + cw},${top + r}` : ''} V${top + h} Z`;
+      s += `<path d="${p}" fill="${a.col}" pointer-events="none"/>`;
+      s += `<rect class="seg-hit" data-i="${i}" data-id="${a.id}" x="${cx - slot/2 + 6}" y="${y1}" width="${slot - 12}" height="${Math.max(y0 - y1, 6)}" fill="transparent" tabindex="0" role="img" aria-label="${DAYFULL[i]}, ${a.name}, ${fmt(v)}"/>`;
+    });
+  });
+  s += `</svg>`;
+  $('#colchart').innerHTML = s;
+  document.querySelectorAll('.seg-hit').forEach(el => {
+    const i = +el.dataset.i, a = STACK.find(z => z.id === el.dataset.id), v = a.m[i];
+    bindTip(el, `<div class="t">${DAYFULL[i]}</div>
+      <div class="r"><i style="background:${a.col}"></i>${a.name}<b>${fmt(v)}</b></div>
+      <div class="m">${Math.round(v/dayTot[i]*100)}% of ${fmt(dayTot[i])} active that day</div>`);
+  });
+})();
+
+/* table view of the chart */
+$('#coltable').innerHTML = `<table><thead><tr><th>Day</th>${STACK.map(a=>`<th class="num">${a.name.replace(/ \(\d+ apps\)/,'')}</th>`).join('')}<th class="num">Total</th></tr></thead><tbody>` +
+  DAYS.map((d,i) => `<tr><td>${DAYFULL[i]}</td>${STACK.map(a=>`<td class="num">${a.m[i]?fmt(a.m[i]):'–'}</td>`).join('')}<td class="num"><b>${fmt(dayTot[i])}</b></td></tr>`).join('') +
+  `</tbody></table>`;
+$('#tblbtn').onclick = () => {
+  const on = $('#coltable').classList.toggle('on');
+  $('#colchart').style.display = on ? 'none' : '';
+  $('#col-legend').style.display = on ? 'none' : '';
+  $('#tblbtn').textContent = on ? 'View as chart' : 'View as table';
+};
+
+/* heatmap: distribute each day's active minutes over typical hours */
+const wd = {7:1.5,15:1,16:2,17:2.5,18:1.5,19:3,20:3.5,21:2,22:.5};
+const fri = {...wd, 22:3, 23:1};
+const we = {9:1,10:2.5,11:3,12:1.5,13:1,14:2.5,15:3,16:3,17:2,18:1,19:3,20:3.5,21:2.5,22:1.5};
+const wts = [wd,wd,wd,wd,fri,we,we];
+function distribute(total, w) {
+  const hrs = Object.keys(w).map(Number), sw = sum(Object.values(w));
+  const raw = hrs.map(h => w[h] / sw * total), fl = raw.map(Math.floor);
+  let rest = total - sum(fl);
+  raw.map((v, i) => [v - fl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, rest).forEach(([, i]) => fl[i]++);
+  const out = Array(24).fill(0); hrs.forEach((h, i) => out[h] = fl[i]); return out;
+}
+const grid = dayTot.map((t, i) => distribute(t, wts[i]));
+const bin = m => m === 0 ? 0 : m < 10 ? 1 : m < 20 ? 2 : m < 30 ? 3 : m < 40 ? 4 : 5;
+let hm = `<span></span>` + Array.from({length:24}, (_, h) => `<span class="hh">${h % 3 === 0 ? String(h).padStart(2,'0') : ''}</span>`).join('');
+DAYS.forEach((d, i) => {
+  hm += `<span class="dl">${d.slice(0,3)}</span>`;
+  grid[i].forEach((m, h) => {
+    hm += `<div class="cell" data-d="${i}" data-h="${h}" data-m="${m}" tabindex="0" role="img" aria-label="${DAYFULL[i]} ${h}:00, ${m} minutes active" style="background:var(--h${bin(m)})"></div>`;
+  });
+});
+$('#heat').innerHTML = hm;
+document.querySelectorAll('.cell').forEach(el => {
+  const d = +el.dataset.d, h = +el.dataset.h, m = +el.dataset.m;
+  const p = n => String(n).padStart(2, '0');
+  bindTip(el, `<div class="t">${DAYFULL[d]}, ${p(h)}:00–${p((h+1)%24)}:00</div><div class="m">${m ? `${m} min active` : 'Not used'}</div>`);
+});
+$('#ramp').innerHTML = `<span>0</span>` + [1,2,3,4,5].map(b => `<i style="background:var(--h${b})"></i>`).join('') + `<span>40+ min per hour</span>`;
+
+/* app table */
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function renderTable() {
+  const maxOpen = Math.max(...WK.map(a => a.openMin));
+  $('#approws').innerHTML = [...WK].sort((a, b) => b.total - a.total).map(a => `
+  <tr>
+    <td><div class="appcell"><span class="appico">${a.unnamed ? '?' : esc(a.name[0])}</span>
+      <div class="appname">
+        <div>${a.unnamed ? `<span class="unnamed">${esc(a.exe)}</span><button class="namebtn" data-id="${a.id}">Name this app</button>` : esc(a.name)}${a.custom ? '<span class="tag" title="Custom name">✎ custom</span>' : ''}</div>
+        ${a.unnamed ? '<div class="exe">No name found in the file</div>' : `<div class="exe">${esc(a.exe)}</div>`}
+      </div></div></td>
+    <td><div class="tbar"><div class="open" style="width:${a.openMin/maxOpen*100}%"></div><div class="fg" style="width:${a.total/maxOpen*100}%"></div></div></td>
+    <td class="num">${fmt(a.total)}</td>
+    <td class="num">${fmt(a.openMin)}</td>
+    <td class="num">${a.ses}</td>
+    <td class="num">${a.last}</td>
+    <td><button class="iconbtn" data-id="${a.id}" aria-label="Rename ${esc(a.name)}" title="Rename">✎</button></td>
+  </tr>`).join('');
+  document.querySelectorAll('#approws [data-id]').forEach(b => b.onclick = () => openRename(b.dataset.id));
+  const n = WK.filter(a => a.custom).length;
+  $('#s-names').textContent = `${n} custom name${n === 1 ? '' : 's'} · 0 hidden`;
+  const hl = document.querySelector('.hint-line');
+  if (hl) hl.style.display = WK.some(a => a.unnamed) ? '' : 'none';
+}
+renderTable();
+
+/* rename dialog */
+let cur = WK.find(a => a.id === 'gx');
+function fillDialog() {
+  $('#d-ico').textContent = cur.unnamed ? '?' : cur.name[0];
+  $('#d-exe').textContent = cur.exe; $('#d-exe2').textContent = cur.exe;
+  $('#d-path').textContent = cur.path || `C:\\Program Files\\...\\${cur.exe}`;
+  $('#d-use').textContent = `${fmt(cur.total)} in front this week · ${cur.ses} sessions`;
+  $('#d-name').value = cur.unnamed ? '' : cur.name;
+  $('#d-det').textContent = cur.unnamed ? 'Detected name: none (the file has no product name)' : `Detected name: ${cur.detected || cur.name}`;
+  $('#d-merge').innerHTML = `<option>Don't merge</option>` + WK.filter(a => a !== cur && !a.unnamed).map(a => `<option>${esc(a.name)}</option>`).join('');
+  $('#d-title').value = cur.exe === 'javaw.exe' ? 'Minecraft' : '';
+  updatePrev();
+}
+function openRename(id) {
+  cur = WK.find(a => a.id === id); fillDialog();
+  $('#dlg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => $('#d-name').focus({ preventScroll: true }), 300);
+}
+function updatePrev() {
+  const v = $('#d-name').value.trim();
+  $('#d-prev').innerHTML = `Will show as <b>${esc(v || cur.exe)}</b> in the dashboard, flyout and reports.`;
+}
+$('#d-name').addEventListener('input', updatePrev);
+$('#d-save').onclick = () => {
+  const v = $('#d-name').value.trim();
+  if (!v) { $('#d-name').focus(); return; }
+  if (!cur.unnamed && !cur.detected) cur.detected = cur.name;
+  cur.name = v; cur.unnamed = false; cur.custom = true;
+  renderTable(); fillDialog();
+  $('#col-legend').innerHTML = STACK.map(a => `<span class="k"><i style="background:${a.col}"></i>${esc(a.name)}</span>`).join('');
+};
+$('#d-cancel').onclick = fillDialog;
+$('#d-reset').onclick = () => {
+  if (cur.detected) cur.name = cur.detected; else { cur.name = cur.exe; cur.unnamed = true; }
+  cur.custom = false; renderTable(); fillDialog();
+};
+document.querySelector('.hint-line a').onclick = () => openRename('gx');
+$('#s-manage').onclick = () => $('#dlg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+fillDialog();
+
+/* settings switches */
+document.querySelectorAll('.switch').forEach(b => b.addEventListener('click', () => {
+  b.setAttribute('aria-checked', b.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+  if (b.id === 'as-sw') renderAutostart();
+}));
+function renderAutostart() {
+  const on = $('#as-sw').getAttribute('aria-checked') === 'true';
+  $('#as-l').textContent = on ? 'On' : 'Off';
+  const st = $('#as-status');
+  st.classList.toggle('warn', !on);
+  st.innerHTML = on
+    ? `TimeTracker starts automatically when you sign in.<span class="mono">HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\TimeTracker = present</span>`
+    : `⚠ TimeTracker will not start at sign-in. Time while it is not running is <b>not tracked</b> and shows as a gap in the timeline.<span class="mono">HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\TimeTracker = removed</span>`;
+}
+renderAutostart();
+</script>
+</body>
+</html>

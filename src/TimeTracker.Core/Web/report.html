@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<style>{{CSS}}</style>
+</head>
+<body>
+<div class="report">
+  <h1 id="h"></h1>
+  <div class="meta" id="m"></div>
+  <div id="content"></div>
+  <div class="foot" id="f"></div>
+</div>
+<script>{{JS}}</script>
+<script>
+const D = {{DATA}};
+setLang(D.lang, D.strings);
+initTips();
+document.getElementById('h').textContent = t('report.title', D.stats.device);
+document.getElementById('m').textContent = periodLabel(D.stats);
+renderStats(document.getElementById('content'), D.stats, { readOnly: true });
+document.getElementById('f').textContent = t('report.generated', fmtDT(D.stats.generatedMs, { dateStyle: 'long', timeStyle: 'short' }));
+</script>
+</body>
+</html>

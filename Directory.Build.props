@@ -1,0 +1,13 @@
+<Project>
+  <!--
+    Single source of truth for the version. Bump it here (and add a CHANGELOG.md entry) for every release.
+    Follows semantic versioning: MAJOR.MINOR.PATCH (new features = MINOR, fixes = PATCH).
+    If the database layout changes, ALSO add a migration in src/TimeTracker.Core/Db.cs (see "Migrations").
+  -->
+  <PropertyGroup>
+    <Version>1.1.0</Version>
+    <Authors>Pieter Walsweer</Authors>
+    <Copyright>Copyright (c) 2026 Pieter Walsweer. All rights reserved.</Copyright>
+    <Product>TimeTracker</Product>
+  </PropertyGroup>
+</Project>
