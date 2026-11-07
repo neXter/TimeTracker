@@ -196,11 +196,14 @@ tr:hover .iconbtn, tr:focus-within .iconbtn, .iconbtn:focus-visible { opacity: 1
 .strip .now { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink); border-radius: 1px; }
 .strip-ticks { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 4px; }
 .fl-sec { font-size: 12px; font-weight: 600; margin: 16px 0 6px; }
-.toprow { display: grid; grid-template-columns: 112px 1fr 56px; align-items: center; gap: 8px; height: 26px; font-size: 13px; }
-.toprow .nm { display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* One shared grid for all rows, so the bar column starts at the same x everywhere while the time column
+   is as wide as its widest value (e.g. "2 Std. 02 Min.") and never wraps. */
+.toplist { display: grid; grid-template-columns: 112px minmax(24px, 1fr) max-content; grid-auto-rows: 26px; align-items: center; column-gap: 8px; font-size: 13px; }
+.toprow { display: contents; }
+.toprow .nm { display: flex; min-width: 0; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .toprow .nm i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .toprow .bar { height: 10px; border-radius: 0 4px 4px 0; }
-.toprow .v { text-align: right; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.toprow .v { white-space: nowrap; text-align: right; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .hint-line { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); margin-top: 10px; padding: 6px 8px; background: var(--hover); border-radius: 6px; }
 .hint-line a { margin-left: auto; font-weight: 600; white-space: nowrap; }
 .hint-line .x { cursor: pointer; color: var(--muted); }

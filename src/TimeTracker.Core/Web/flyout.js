@@ -26,7 +26,7 @@ async function render() {
     <div class="strip-ticks"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
     <div class="legend" style="margin:8px 0 0"><span class="k"><i style="background:var(--s1)"></i>${esc(t('state.active'))}</span><span class="k"><i style="background:var(--idle)"></i>${esc(t('state.idle'))}</span><span class="k"><i style="background:var(--track);outline:1px solid var(--axis)"></i>${esc(t('state.locked'))}</span></div>
     <div class="fl-sec">${esc(t('fl.mostUsed'))}</div>
-    ${rows || `<div class="muted" style="font-size:12px">${esc(t('fl.noApps'))}</div>`}
+    ${rows ? `<div class="toplist">${rows}</div>` : `<div class="muted" style="font-size:12px">${esc(t('fl.noApps'))}</div>`}
     ${hint}
     <div class="fl-foot"><button class="primary" id="opendash">${esc(t('fl.openDashboard'))}</button><button id="rep">${esc(t('fl.report'))} ▾</button><span class="sp"></span>${state}</div>`;
 
