@@ -110,8 +110,8 @@ internal sealed partial class TrayApp
                 {
                     string pin = Str(a, "pin");
                     if (pin.Length < 4) throw new ArgumentException("pin too short");
-                    // Changing an existing PIN needs the current one (no-op prompt when none is set yet).
-                    if (!RequirePin()) return false;
+                    // Changing an existing PIN needs the current one, which the settings dialog collects itself.
+                    if (Settings.PinSet && !Settings.VerifyPin(Str(a, "current"))) return false;
                     Settings.SetPin(pin); return true;
                 }
             case "clearPin":

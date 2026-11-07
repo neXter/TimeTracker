@@ -88,18 +88,23 @@ function wire() {
 function closeModal() { document.getElementById('modal').innerHTML = ''; }
 function pinDialog() {
   const m = document.getElementById('modal');
+  const changing = st.pinSet;   // an existing PIN has to be confirmed first
   m.innerHTML = `<div class="backdrop"><div class="dlg" style="width:380px" role="dialog" aria-modal="true"><h4>${esc(t('pin.title'))}</h4>
+    ${changing ? `<div class="field"><label class="l" for="p0">${esc(t('pin.current'))}</label><input type="password" id="p0" inputmode="numeric" maxlength="12" autocomplete="off"></div>` : ''}
     <div class="field"><label class="l" for="p1">${esc(t('pin.new'))}</label><input type="password" id="p1" inputmode="numeric" maxlength="12" autocomplete="off"></div>
     <div class="field"><label class="l" for="p2">${esc(t('pin.confirm'))}</label><input type="password" id="p2" inputmode="numeric" maxlength="12" autocomplete="off"><div class="h" id="perr">${esc(t('pin.help'))}</div></div>
     <div class="acts"><button class="primary" id="psave">${esc(t('btn.save'))}</button><button id="pcancel">${esc(t('btn.cancel'))}</button></div></div></div>`;
   const p1 = document.getElementById('p1'), p2 = document.getElementById('p2'), err = document.getElementById('perr');
-  p1.focus();
+  const p0 = document.getElementById('p0');
+  (p0 || p1).focus();
   document.getElementById('pcancel').onclick = () => { closeModal(); refresh(); };
   document.getElementById('psave').onclick = async () => {
     if (p1.value.length < 4) { err.textContent = t('pin.tooShort'); err.style.color = 'var(--danger)'; p1.focus(); return; }
     if (p1.value !== p2.value) { err.textContent = t('pin.mismatch'); err.style.color = 'var(--danger)'; p2.focus(); return; }
-    // false = the current PIN was not entered correctly: keep the dialog open, nothing was changed.
-    if (await api('setPin', { pin: p1.value })) { closeModal(); await refresh(); }
+    if (await api('setPin', { pin: p1.value, current: p0 ? p0.value : '' })) { closeModal(); await refresh(); return; }
+    // false = the current PIN was wrong: keep the dialog open, nothing was changed.
+    if (!p0) { closeModal(); await refresh(); return; }   // a PIN was set in the meantime: reopen with the extra field
+    err.textContent = t('pin.wrong'); err.style.color = 'var(--danger)'; p0.value = ''; p0.focus();
   };
   m.onkeydown = e => { if (e.key === 'Enter') document.getElementById('psave').click(); if (e.key === 'Escape') document.getElementById('pcancel').click(); };
 }

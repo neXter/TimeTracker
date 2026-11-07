@@ -67,7 +67,7 @@
     "set.reports": "Reports", "set.reportDir": "Report folder", "set.change": "Change…", "set.autoReports": "Create weekly and monthly reports automatically", "set.autoReports.d": "Every Monday for the previous week, and on the 1st for the previous month.",
     "set.protection": "Protection", "set.pin": "Require a PIN to pause, exit or change settings", "set.pin.d": "Also protects the autostart switch, Delete all data and Uninstall.", "set.pin.set": "Set PIN…", "set.pin.change": "Change PIN…",
     "set.dataLocal": "Data on this device only", "set.openFolder": "Open folder", "set.deleteAll": "Delete all data…", "set.uninstall": "Uninstall…",
-    "pin.title": "Set a PIN", "pin.new": "New PIN", "pin.confirm": "Repeat PIN", "pin.help": "At least 4 digits.", "pin.tooShort": "The PIN needs at least 4 characters.", "pin.mismatch": "The two PINs do not match.",
+    "pin.title": "Set a PIN", "pin.current": "Current PIN", "pin.new": "New PIN", "pin.confirm": "Repeat PIN", "pin.help": "At least 4 digits.", "pin.tooShort": "The PIN needs at least 4 characters.", "pin.mismatch": "The two PINs do not match.",
 
     "tray.dashboard": "Open dashboard", "tray.report": "Generate report", "tray.pause": "Pause tracking", "tray.resume": "Resume tracking", "tray.settings": "Settings…", "tray.exit": "Exit",
     "tray.tooltip": "TimeTracker · Active today {0}", "tray.tooltipPaused": "TimeTracker · PAUSED · Active today {0}",
@@ -156,7 +156,7 @@
     "set.reports": "Berichte", "set.reportDir": "Berichtsordner", "set.change": "Ändern…", "set.autoReports": "Wochen- und Monatsberichte automatisch erstellen", "set.autoReports.d": "Jeden Montag für die Vorwoche und am 1. für den Vormonat.",
     "set.protection": "Schutz", "set.pin": "PIN zum Pausieren, Beenden und Ändern der Einstellungen verlangen", "set.pin.d": "Schützt auch den Autostart-Schalter, „Alle Daten löschen“ und „Deinstallieren“.", "set.pin.set": "PIN festlegen…", "set.pin.change": "PIN ändern…",
     "set.dataLocal": "Daten nur auf diesem Gerät", "set.openFolder": "Ordner öffnen", "set.deleteAll": "Alle Daten löschen…", "set.uninstall": "Deinstallieren…",
-    "pin.title": "PIN festlegen", "pin.new": "Neue PIN", "pin.confirm": "PIN wiederholen", "pin.help": "Mindestens 4 Zeichen.", "pin.tooShort": "Die PIN braucht mindestens 4 Zeichen.", "pin.mismatch": "Die beiden PINs stimmen nicht überein.",
+    "pin.title": "PIN festlegen", "pin.current": "Aktuelle PIN", "pin.new": "Neue PIN", "pin.confirm": "PIN wiederholen", "pin.help": "Mindestens 4 Zeichen.", "pin.tooShort": "Die PIN braucht mindestens 4 Zeichen.", "pin.mismatch": "Die beiden PINs stimmen nicht überein.",
 
     "tray.dashboard": "Dashboard öffnen", "tray.report": "Bericht erstellen", "tray.pause": "Erfassung pausieren", "tray.resume": "Erfassung fortsetzen", "tray.settings": "Einstellungen…", "tray.exit": "Beenden",
     "tray.tooltip": "TimeTracker · Heute aktiv {0}", "tray.tooltipPaused": "TimeTracker · PAUSIERT · Heute aktiv {0}",
