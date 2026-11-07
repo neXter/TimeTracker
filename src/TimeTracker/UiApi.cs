@@ -110,9 +110,13 @@ internal sealed partial class TrayApp
                 {
                     string pin = Str(a, "pin");
                     if (pin.Length < 4) throw new ArgumentException("pin too short");
+                    // Changing an existing PIN needs the current one (no-op prompt when none is set yet).
+                    if (!RequirePin()) return false;
                     Settings.SetPin(pin); return true;
                 }
-            case "clearPin": Settings.ClearPin(); return true;
+            case "clearPin":
+                if (!RequirePin()) return false;
+                Settings.ClearPin(); return true;
 
             case "openFolder":
                 {

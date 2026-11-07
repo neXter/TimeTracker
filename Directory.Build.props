@@ -5,7 +5,7 @@
     If the database layout changes, ALSO add a migration in src/TimeTracker.Core/Db.cs (see "Migrations").
   -->
   <PropertyGroup>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>Pieter Walsweer</Authors>
     <Copyright>Copyright (c) 2026 Pieter Walsweer. All rights reserved.</Copyright>
     <Product>TimeTracker</Product>

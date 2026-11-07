@@ -98,7 +98,8 @@ function pinDialog() {
   document.getElementById('psave').onclick = async () => {
     if (p1.value.length < 4) { err.textContent = t('pin.tooShort'); err.style.color = 'var(--danger)'; p1.focus(); return; }
     if (p1.value !== p2.value) { err.textContent = t('pin.mismatch'); err.style.color = 'var(--danger)'; p2.focus(); return; }
-    await api('setPin', { pin: p1.value }); closeModal(); await refresh();
+    // false = the current PIN was not entered correctly: keep the dialog open, nothing was changed.
+    if (await api('setPin', { pin: p1.value })) { closeModal(); await refresh(); }
   };
   m.onkeydown = e => { if (e.key === 'Enter') document.getElementById('psave').click(); if (e.key === 'Escape') document.getElementById('pcancel').click(); };
 }

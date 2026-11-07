@@ -4,6 +4,12 @@ Versions follow [semantic versioning](https://semver.org): new features raise th
 number. The version is set in one place, [Directory.Build.props](Directory.Build.props). Upgrading never touches
 recorded data: see "Updating" in the [README](README.md).
 
+## 1.1.3
+
+- Fix: setting, changing or removing the PIN did not ask for the current PIN, so anyone could simply set a new one
+  and bypass the lock. With a PIN set, changing or removing it now requires the current PIN. Setting a first PIN
+  still works without a prompt.
+
 ## 1.1.2
 
 - Fix: in the tray flyout, durations in the "Most used today" list (e.g. "2 Std. 02 Min.") no longer wrap onto two
