@@ -7,8 +7,8 @@ recorded data: see "Updating" in the [README](README.md).
 ## 1.1.3
 
 - Fix: setting, changing or removing the PIN did not ask for the current PIN, so anyone could simply set a new one
-  and bypass the lock. With a PIN set, changing or removing it now requires the current PIN. Setting a first PIN
-  still works without a prompt.
+  and bypass the lock. With a PIN set, changing or removing it now requires the current PIN (the PIN dialog has a
+  "Current PIN" field and stays open with an error if it is wrong). Setting a first PIN still works without a prompt.
 
 ## 1.1.2
 
