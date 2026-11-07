@@ -4,6 +4,11 @@ Versions follow [semantic versioning](https://semver.org): new features raise th
 number. The version is set in one place, [Directory.Build.props](Directory.Build.props). Upgrading never touches
 recorded data: see "Updating" in the [README](README.md).
 
+## 1.1.2
+
+- Fix: in the tray flyout, durations in the "Most used today" list (e.g. "2 Std. 02 Min.") no longer wrap onto two
+  lines when the flyout is narrow. The time column now fits its widest value and the bars take the remaining space.
+
 ## 1.1.1
 
 - Fix: the chart legend said "Other (1 apps)"; it now says "Other (1 app)" (English and German).
